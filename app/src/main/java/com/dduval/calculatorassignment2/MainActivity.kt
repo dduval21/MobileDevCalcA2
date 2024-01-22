@@ -60,6 +60,10 @@ fun onButtonClick(view: View) {
                 "-" -> operandOne - operandTwo
                 else -> 0.0
             }
+            currentInput = result.toString()
+            operandOne = result
+            selectedOperator = null
+            updateDisplay()
         }
     }
 
