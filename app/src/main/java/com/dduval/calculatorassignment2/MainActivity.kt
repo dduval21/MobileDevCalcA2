@@ -10,7 +10,7 @@ import androidx.core.text.isDigitsOnly
 class MainActivity : AppCompatActivity() {
     private lateinit var display: EditText
     private var currentInput = ""
-    private var currentOperator: String? = null
+    private var selectedOperator: String? = null
     private var operandOne: Double = 0.0
 
 
@@ -27,10 +27,43 @@ fun onButtonClick(view: View) {
     when {
         buttonText.isDigitsOnly() -> appendDigit(buttonText)
         buttonText == "C" -> clearDisplay()
-        buttonText == "=" -> performCalculation()
+        buttonText == "=" -> Calculate()
         else -> setOperator(buttonText)
     }
 
 }
+    private fun appendDigit(digit: String) {
+        currentInput += digit
+        updateDisplay()
+    }
 
+    private fun clearDisplay() {
+        currentInput = ""
+        operandOne = 0.0
+        selectedOperator = null
+    }
+
+    private fun setOperator(operator: String) {
+        if (selectedOperator == null ) {
+            operandOne = currentInput.toDouble()
+            currentInput = ""
+            selectedOperator = operator
+            updateDisplay()
+        }
+    }
+
+    private fun Calculate() {
+        if (selectedOperator != null) {
+            val operandTwo = currentInput.toDouble()
+            val result = when (selectedOperator) {
+                "+" -> operandOne + operandTwo
+                "-" -> operandOne - operandTwo
+                else -> 0.0
+            }
+        }
+    }
+
+    private fun updateDisplay() {
+        display.setText(currentInput)
+    }
 }
